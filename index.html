@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namaste Psychology — Book &amp; Pay</title>
+<meta name="description" content="Book your session, pay, and review the cancellation policy — all in one place.">
+<style>
+  :root{
+    --teal-900:#0b3a3f;
+    --teal-700:#0f5a5e;
+    --teal-500:#1a8a86;
+    --teal-300:#7fd4c9;
+    --mist:#eef8f6;
+    --paper:#ffffff;
+    --ink:#0e2a2c;
+    --ink-soft:#4c6664;
+    --line: rgba(15,90,94,0.14);
+    --glass: rgba(255,255,255,0.55);
+    --glass-border: rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: 'Inter Tight', Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(60% 50% at 15% 0%, rgba(127,212,201,0.55), transparent 60%),
+      radial-gradient(50% 45% at 100% 10%, rgba(15,90,94,0.35), transparent 55%),
+      radial-gradient(70% 60% at 50% 100%, rgba(127,212,201,0.30), transparent 60%),
+      var(--mist);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+
+  header.hero{
+    text-align:center;
+    padding: 20px 4px 28px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    letter-spacing:0.04em;
+    color: var(--teal-700);
+    background: rgba(255,255,255,0.55);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  .badge svg{ width:14px; height:14px; }
+  h1{
+    font-size: 30px;
+    line-height:1.15;
+    margin: 0 0 10px;
+    letter-spacing:-0.01em;
+    color: var(--teal-900);
+  }
+  header.hero p{
+    color: var(--ink-soft);
+    font-size:15px;
+    max-width:420px;
+    margin: 0 auto;
+    line-height:1.55;
+  }
+
+  nav.quicklinks{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:22px;
+  }
+  nav.quicklinks a{
+    font-size:13px;
+    color: var(--teal-700);
+    text-decoration:none;
+    background: rgba(255,255,255,0.5);
+    border:1px solid var(--glass-border);
+    padding:7px 13px;
+    border-radius:999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  nav.quicklinks a:hover{ background: rgba(255,255,255,0.8); transform: translateY(-1px); }
+
+  section.card{
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 22px;
+    padding: 26px 24px;
+    margin-top: 18px;
+    box-shadow: 0 8px 30px rgba(11,58,63,0.08);
+    scroll-margin-top: 20px;
+  }
+
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .icon{
+    width:38px; height:38px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, var(--teal-500), var(--teal-700));
+    color:white;
+    flex-shrink:0;
+  }
+  .icon svg{ width:19px; height:19px; }
+  .card-head h2{
+    font-size:17px;
+    margin:0;
+    color: var(--teal-900);
+    letter-spacing:-0.005em;
+  }
+  .card-head .eyebrow{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color: var(--teal-500);
+    font-weight:600;
+    display:block;
+    margin-bottom:2px;
+  }
+
+  /* Book section */
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:14px 18px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--teal-500), var(--teal-700));
+    color:#fff;
+    box-shadow: 0 10px 24px rgba(15,90,94,0.28);
+  }
+  .btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(15,90,94,0.34); }
+  .btn-primary svg{ width:17px; height:17px; }
+
+  section.card p{
+    font-size:14px;
+    color: var(--ink-soft);
+    line-height:1.6;
+    margin: 0 0 14px;
+  }
+
+  /* Payment card */
+  .qr-frame{
+    background: var(--paper);
+    border-radius: 18px;
+    padding: 12px;
+    max-width: 280px;
+    margin: 4px auto 16px;
+    box-shadow: 0 4px 18px rgba(11,58,63,0.10);
+  }
+  .qr-frame img{
+    display:block;
+    width:100%;
+    border-radius: 10px;
+  }
+  .pay-note{
+    text-align:center;
+    font-size:13px;
+    color: var(--ink-soft);
+    margin-top:-6px;
+  }
+  .upi-id{
+    text-align:center;
+    font-size:14px;
+    font-weight:600;
+    color: var(--teal-800, var(--teal-700));
+    background: rgba(255,255,255,0.6);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px;
+    margin: 10px 0 4px;
+    letter-spacing:0.01em;
+  }
+
+  /* Policy list */
+  .policy-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .policy-list li{
+    display:flex;
+    gap:10px;
+    font-size:14px;
+    line-height:1.55;
+    color: var(--ink);
+    background: rgba(255,255,255,0.45);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 14px;
+  }
+  .policy-list li .dot{
+    flex-shrink:0;
+    width:8px; height:8px;
+    border-radius:50%;
+    background: var(--teal-500);
+    margin-top:6px;
+  }
+  .policy-list li strong{ color: var(--teal-900); }
+  .policy-note{
+    margin-top:12px;
+    font-size:13px;
+    color: var(--ink-soft);
+    padding: 10px 14px;
+    border-left: 3px solid var(--teal-300);
+    background: rgba(127,212,201,0.15);
+    border-radius: 0 10px 10px 0;
+  }
+
+  /* Location */
+  .loc-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .loc-text{
+    font-size:14px;
+    color: var(--ink-soft);
+    line-height:1.55;
+  }
+  .loc-text strong{ color: var(--ink); display:block; margin-bottom:2px; font-size:14.5px;}
+  .btn-secondary{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:13.5px;
+    font-weight:600;
+    color: var(--teal-700);
+    background: rgba(255,255,255,0.6);
+    border:1px solid var(--glass-border);
+    padding:10px 16px;
+    border-radius:12px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background 0.2s ease;
+  }
+  .btn-secondary:hover{ background: rgba(255,255,255,0.9); }
+  .btn-secondary svg{ width:15px; height:15px; }
+
+  footer{
+    text-align:center;
+    margin-top: 30px;
+    font-size:12.5px;
+    color: var(--ink-soft);
+  }
+  footer a{ color: var(--teal-700); text-decoration:none; }
+
+  @media (max-width: 420px){
+    h1{ font-size:26px; }
+    section.card{ padding:22px 18px; border-radius:18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C.5 8 2 4 6 4c2 0 3.5 1.2 4 2 0.5-0.8 2-2 4-2 4 0 5.5 4 3.5 8-2.5 4.5-9.5 9-9.5 9z"/></svg>
+      Namaste Psychology
+    </span>
+    <h1>Book, pay, and you're set</h1>
+    <p>Everything you need for your session — the intake form, payment, and policy — in one place.</p>
+
+    <nav class="quicklinks">
+      <a href="#book">Intake form</a>
+      <a href="#pay">Payment</a>
+      <a href="#policy">Policy</a>
+      <a href="#location">Clinic</a>
+    </nav>
+  </header>
+
+  <section class="card" id="book">
+    <div class="card-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </div>
+      <div>
+        <span class="eyebrow">Step 1</span>
+        <h2>Fill the intake form</h2>
+      </div>
+    </div>
+    <p>Takes a few minutes and helps me prepare for our first session.</p>
+    <a class="btn btn-primary" href="https://forms.gle/zp5F6ac2MpFbzFbZ9" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+      Open intake form
+    </a>
+  </section>
+
+  <section class="card" id="pay">
+    <div class="card-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+      </div>
+      <div>
+        <span class="eyebrow">Step 2</span>
+        <h2>Confirm with payment</h2>
+      </div>
+    </div>
+    <p>Your session is confirmed once payment is received — please pay at least 24 hrs before your appointment. Scan with any UPI app.</p>
+    <div class="qr-frame">
+      <img src="assets/payment-qr.png" alt="Namaste Psychology UPI payment QR code" loading="lazy">
+    </div>
+    <div class="upi-id">Namaste Psychology · 89561 49681</div>
+    <p class="pay-note" style="margin-top:8px;">Please share a screenshot of the payment after scanning, so I can confirm your slot.</p>
+  </section>
+
+  <section class="card" id="policy">
+    <div class="card-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div>
+        <span class="eyebrow">Good to know</span>
+        <h2>Cancellation &amp; payment policy</h2>
+      </div>
+    </div>
+    <ul class="policy-list">
+      <li><span class="dot"></span><span>Sessions are confirmed once payment is received, at least <strong>24 hrs before</strong> the appointment.</span></li>
+      <li><span class="dot"></span><span>Cancel <strong>24+ hrs before</strong>: 100% refund or full credit towards rescheduling.</span></li>
+      <li><span class="dot"></span><span>Cancel <strong>within 24 hrs</strong>: 75% refund or partial credit.</span></li>
+      <li><span class="dot"></span><span>Cancel <strong>within 2 hrs or no-show</strong>: No refund.</span></li>
+      <li><span class="dot"></span><span>Late arrival shortens your session; over <strong>15 mins late</strong> without notice counts as a no-show.</span></li>
+    </ul>
+    <p class="policy-note">If I cancel, you'll receive a full refund or a reschedule at no extra cost.</p>
+  </section>
+
+  <section class="card" id="location">
+    <div class="card-head">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <span class="eyebrow">Meeting in person?</span>
+        <h2>Clinic location</h2>
+      </div>
+    </div>
+    <div class="loc-row">
+      <div class="loc-text">
+        <strong>Law College Road Clinic</strong>
+        Pune, Maharashtra
+      </div>
+      <a class="btn-secondary" href="https://maps.app.goo.gl/UZN3J1hjnh2tcHQW7" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+        Open in Maps
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    Questions? Reach out at <a href="tel:+918956149681">+91 89561 49681</a>
+  </footer>
+
+</div>
+</body>
+</html>
